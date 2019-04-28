@@ -14,6 +14,7 @@ using namespace std;
 
 class DFA;
 
+// The interface of the NFA state. State stored in NFA
 struct NState {
   NState();
   ~NState();
@@ -21,15 +22,16 @@ struct NState {
          NState* out2=NULL, int endId=-1);
 
   enum StateTag {LAMBDA=-1, END=0};
-  int char_;
-  int flag;
-  NState*  out1;
+  int char_; //char to enter the state
+  int flag; //travel flag
+  NState*  out1; 
   NState* out2;
-  int index;
+  int index; //index of the state vector
   int outNum;
   int endId;
 };
 
+// The interface of the NFA state fragment 
 struct NStateFrag {
   NState* start;
   NState** out1;
@@ -49,6 +51,7 @@ struct DState {
   int endId;
 };
 
+// Interface of NFA
 class NFA {
   public:
     NFA(vector<int> reg, int endId = 0);

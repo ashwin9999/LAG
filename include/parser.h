@@ -11,11 +11,17 @@
 
 using namespace std;
 
+
+/*
+* RegexEntry struct stores the information about the entries in the .lex file
+(input specifications).
+*/
+
 struct RegexEntry {
 
-  vector<int> regex;
-  int priority;
-  string regexType;
+  vector<int> regex; //Stores the int value of the regex
+  int priority; //The position of the regex in the .lex file
+  string regexType; //The type of the regex entry
   RegexEntry(){}
   RegexEntry(string& raw);
   RegexEntry(vector<int>& regex, int priority, string regexType):
@@ -23,6 +29,7 @@ struct RegexEntry {
   void convertToC(ostream& os);
   void setRegex(string& reg_str);
   vector<int> parseBracket(vector<int>& reg);
+  // Map of Regex operators
   enum RegexTag {
     PLUS      = -1,  // '+'
     STAR      = -2,  // '*'

@@ -15,11 +15,11 @@ using namespace std;
 struct DState;
 
 struct DFAState {
-  int identifier;
-  map<int, int> nexts;
-  bool isEnd;
+  int identifier; //id of DFA
+  map<int, int> nexts; //next states
+  bool isEnd; 
   bool isFirst;
-  int endId;
+  int endId; //regex priority
 
 };
 

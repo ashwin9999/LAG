@@ -12326,12 +12326,12 @@ void iter_list(void (*trav_func)(Token*)) {
     ITER_NEXT(iter);
   }
 }
-void myfunc() {
+void print() {
   iter_list(print_token);
   printf("line number: %d", i);
 }
 int main(int argc, char** argv) {
-  yylex(argv[1], myfunc);
+  yylex(argv[1], print);
   return 0;
 }
 

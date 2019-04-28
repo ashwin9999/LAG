@@ -46,6 +46,10 @@ DFA::~DFA() {
   _releaseStates(_states);
 }
 
+/*
+* Uses DFA to match the input string. Returns the end id.
+*/
+
 int DFA::match(string input) {
   int id = _first;
   BOOST_FOREACH(char c, input) {
@@ -134,6 +138,12 @@ int DFA::_constructMinDFA(DFAState* o_state, vector<DFAState*>& minStates,
   return id;
 }
 
+/*
+* Used to minimize DFA
+* Divides states to different equivalent sets by checking if a state 
+* is the final state
+*/
+
 void DFA::_divideByEnd(int& setIterator, int* setLog) {
   setIterator++;
   BOOST_FOREACH(DFAState* state, _states) {
@@ -143,6 +153,12 @@ void DFA::_divideByEnd(int& setIterator, int* setLog) {
     }
   }
 }
+
+/*
+* Used to minimize DFA
+* Divides states to different equivalent sets by checking if the states 
+* have the same output key
+*/
 
 void DFA::_divideByOutputKey(int& setIterator, int* setLog) {
   map<set<int>, int> outputLog;
@@ -168,6 +184,12 @@ void DFA::_divideByOutputKey(int& setIterator, int* setLog) {
   }
 }
 
+/*
+* Used to minimize DFA
+* Divides states to different equivalent sets by checking if the states have the
+* same output value (if they have same next states) 
+*/
+
 void DFA::_divideByNext(int& setIterator, int* setLog) {
   map<int, set<int> > equalSets;
   for (unsigned int i = 0; i < _states.size(); i++) {
@@ -185,6 +207,11 @@ void DFA::_divideByNext(int& setIterator, int* setLog) {
     _divideByNextInner(setIterator, setLog, item.second);
   }
 }
+
+/*
+* Used to minimize DFA
+* Implements the divideByNext function internally.
+*/
 
 void DFA::_divideByNextInner(int& setIterator, int* setLog,
                                set<int>& equalSet) {

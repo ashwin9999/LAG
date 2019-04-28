@@ -23,6 +23,11 @@ RegexEntry::RegexEntry(string& raw) {
   regexType.append(buffer);
 }
 
+/*
+* Sets the regex for the RegexEntry.
+* Converts the regex string to an int array.
+*/
+
 void RegexEntry::setRegex(string& reg) {
   bool escape = false;
   vector<int> _free;
@@ -87,6 +92,10 @@ void RegexEntry::setRegex(string& reg) {
   regex = parseBracket(_free);
 }
 
+/*
+* Parses the string inside the square bracket
+*/
+
 vector<int> RegexEntry::parseBracket(vector<int>& reg) {
   bool bracket = false;
   bool hyphen = false;
@@ -132,6 +141,15 @@ vector<int> RegexEntry::parseBracket(vector<int>& reg) {
   }
   return result;
 }
+
+
+/*
+* Converts the type of regex entry in RegexEntry to C++ code.
+* Basically, if the priority is n, the c++ code will be:
+* void endHandlerN(char* str) {
+*   handler;
+* }
+*/ 
 
 void RegexEntry::convertToC(ostream& os) {
   char tmp[BUFFER_SIZE];
@@ -224,11 +242,19 @@ DFA* Parser::_constructDFA(vector<RegexEntry>& entries) {
   return dfa;
 }
 
+/*
+* Converts DFA to C++ code with the given filename
+*/
+
 void Parser::convertToC(string& filename) {
   ofstream ofs(filename.c_str());
   _convertToC(ofs);
   ofs.close();
 }
+
+/*
+* Implements the conversion to C++ code.
+*/
 
 void Parser::_convertToC(ostream& os) {
   _printInclude(os);
@@ -240,6 +266,7 @@ void Parser::_convertToC(ostream& os) {
   _printHelper(os);
   _printMain(os);
 }
+
 void Parser::_printInclude(ostream& os) {
   c_code(os,
         "#include <stdio.h>",

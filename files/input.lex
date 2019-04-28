@@ -1,0 +1,116 @@
+%{
+#include <stdlib.h>
+int i = 0;
+%}
+%%
+\s|\t|\r {
+  strcpy(token->type, "SKIP");
+}
+
+\n {
+  strcpy(token->type, "SKIP");
+  i++;
+}
+
+if|else|while|do|break|switch|for|case|struct|typedef|cout|cin {
+  strcpy(token->type,"KEYWORD");
+}
+
+int|float|double|long|char {
+  strcpy(token->type, "TYPE");
+}
+
+(un)?signed {
+  strcpy(token->type, "TYPE_MODIFIER");
+}
+
+#(include|define|undef|ifdef|ifndef|if|endif|elif|else) {
+  strcpy(token->type,"PREPROC_DERIV");
+}
+
+[a-zA-Z_][a-z0-9A-Z_]* {
+  strcpy(token->type, "IDENTIFIER");
+}
+
+[1-9][0-9]*|[0-9] {
+  strcpy(token->type, "INTEGER");
+}
+
+\+|\-|\*|/|% {
+  strcpy(token->type, "ARITHMETIC_OP");
+}
+
+==|&&|(\|\|)|!|<|>|<=|>= {
+  strcpy(token->type, "LOGICAL_OP");
+}
+
+^|&|~|\| {
+  strcpy(token->type, "BIT_OP");
+}
+
+\-> {
+  strcpy(token->type, "ACCESS_OP");
+}
+
+= {
+  strcpy(token->type, "ASSIGN_OP");
+}
+
+; {
+  strcpy(token->type, "SEMICOLON");
+}
+
+\. {
+  strcpy(token->type, "DOT");
+}
+
+, {
+  strcpy(token->type, "COMMA");
+}
+
+\[ {
+  strcpy(token->type, "LEFT_SQBRAC");
+}
+
+\] {
+  strcpy(token->type, "RIGHT_SQBRAC");
+}
+
+" {
+   strcpy(token->type, "QUOTE");
+}
+
+<< {
+    strcpy(token->type, "FEED_OUT");
+}
+
+>> {
+    strcpy(token->type, "FEED_IN");
+}
+
+\( {
+  strcpy(token->type, "LEFT_PAREN");
+}
+
+\) {
+  strcpy(token->type, "RIGHT_PAREN");
+}
+
+} {
+  strcpy(token->type, "BLOCK_END");
+}
+
+{ {
+  strcpy(token->type, "BLOCK_START");
+}
+%%
+
+void myfunc() {
+  iter_list(print_token);
+  printf("line number: %d", i);
+}
+
+int main(int argc, char** argv) {
+  yylex(argv[1], myfunc);
+  return 0;
+}

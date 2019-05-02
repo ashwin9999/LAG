@@ -1,6 +1,7 @@
 %{
-#include <stdlib.h>
-int i = 0;
+#include <iostream>
+using namespace std;
+int lineNum = 1;
 %}
 %%
 \s|\t|\r {
@@ -9,7 +10,7 @@ int i = 0;
 
 \n {
   strcpy(token->type, "SKIP");
-  i++;
+  lineNum++;
 }
 
 if|else|while|do|break|switch|for|case|struct|typedef|cout|cin {
@@ -81,11 +82,11 @@ int|float|double|long|char {
 }
 
 << {
-    strcpy(token->type, "FEED_OUT");
+    strcpy(token->type, "LEFT_SHIFT");
 }
 
 >> {
-    strcpy(token->type, "FEED_IN");
+    strcpy(token->type, "RIGHT_SHIFT");
 }
 
 \( {
@@ -107,7 +108,7 @@ int|float|double|long|char {
 
 void print() {
   iter_list(print_token);
-  printf("line number: %d", i);
+  cout << "Number of lines: " <<  lineNum << endl;
 }
 
 int main(int argc, char** argv) {

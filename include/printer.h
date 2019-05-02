@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-void c_code(ostream& os, ...);
+void printCode(ostream& os, ...);
 void fgetline(istream& is, char* buffer, int size);
 
 #endif //LEX_ANALYZER_GENERATOR_PRINTER_H

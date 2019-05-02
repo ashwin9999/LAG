@@ -9,8 +9,8 @@
 int main(int argc, char ** args) {
   if (argc < 2) {
     cout << "Please enter two files: " << endl;
-    cout << "1. Input specifications (See sample/input.lex)" << endl;
-    cout << "2. An output file for Lexical Analyzer (eg: output.c)" << endl;
+    cout << "1. Input specifications (See files/input.specs)" << endl;
+    cout << "2. An output file for Lexical Analyzer (eg: output.cpp or lexicalAnalyzer.cpp)" << endl;
   }
   cout << "LAG (Lexical Analzer Generator) - Project for Compiler Design by Ashwin Mishra" << endl;
   cout << "------------------------------------------------------------------------------" << endl;

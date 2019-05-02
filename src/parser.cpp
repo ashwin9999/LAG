@@ -154,7 +154,7 @@ vector<int> RegexEntry::parseBracket(vector<int>& reg) {
 void RegexEntry::convertToC(ostream& os) {
   char tmp[BUFFER_SIZE];
   sprintf(tmp, "void endHandler%d(Token* token)", priority);
-  c_code(os,
+  printCode(os,
          tmp,
          regexType.c_str(),
          "");
@@ -268,7 +268,7 @@ void Parser::_convertToC(ostream& os) {
 }
 
 void Parser::_printInclude(ostream& os) {
-  c_code(os,
+  printCode(os,
         "#include <stdio.h>",
         "#include <stdlib.h>",
         "#include <string.h>",
@@ -276,7 +276,7 @@ void Parser::_printInclude(ostream& os) {
   os << _declaration << endl;
 }
 void Parser::_printStructToken(ostream& os) {
-  c_code(os,
+  printCode(os,
          "typedef struct _token {",
          "  char type[32];",
          "  char value[32];",
@@ -302,7 +302,7 @@ void Parser::_printMain(ostream& os) {
   os << _code << endl;
 }
 void Parser::_printHelper(ostream& os) {
-  c_code(os,
+  printCode(os,
          "void print_token(Token* token) {",
          "  printf(\"('%s', '%s')\\n\", token->type, token->value);",
          "}",

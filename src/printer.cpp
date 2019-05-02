@@ -5,7 +5,7 @@
 #include "lag.h"
 #include <stdarg.h>
 
-void c_code(ostream& os, ...) {
+void printCode(ostream& os, ...) {
     va_list ap;
     const char* s;
     va_start(ap, os);

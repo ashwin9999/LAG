@@ -63,14 +63,11 @@ int DFA::match(string input) {
 
 void DFA::print(ostream& os, vector<DFAState*>& states) {
   os << endl << endl << endl;
-  os << "================= SPLIT LINE ==============" <<endl;
+  os << "==================================" <<endl;
 
   typedef map<int, int> map_t;
   int max = 0;
   BOOST_FOREACH (DFAState* state, states) {
-    os << state->identifier << " end?:" << state->isEnd << "\t";
-    os << state->identifier << " end_id:" << state->endId << "\t";
-    os << " first?:" << state->isFirst<< "\t";
     BOOST_FOREACH(map_t::value_type item_m, state->nexts) {
       os << (char)item_m.first << " => " << item_m.second << "\n";
       if(item_m.second > max){
@@ -79,8 +76,6 @@ void DFA::print(ostream& os, vector<DFAState*>& states) {
     }
     os << endl;
   }
-  cout << "MAX STATE " << max << endl;
-
   os << endl << endl << endl;
 }
 
@@ -266,7 +261,7 @@ void DFA::convertToC(ostream& os) {
 }
 
 void DFA::_printHeader(ostream& os) {
-  c_code(os,
+  printCode(os,
          "void parse(FILE* file) {",
          "  int state;",
          "  char c;",
@@ -274,7 +269,7 @@ void DFA::_printHeader(ostream& os) {
          "  char buffer_index;",
          "");
   _printStateReset(os);
-  c_code(os,
+  printCode(os,
          "while (EOF != (c = fgetc(file))) {",
          "  buffer[buffer_index] = c;",
          "  buffer_index++; buffer[buffer_index]='\\0';",
@@ -283,13 +278,13 @@ void DFA::_printHeader(ostream& os) {
 }
 
 void DFA::_printFooter(ostream& os) {
-  c_code(os, "  }", "}", "}", "");
+  printCode(os, "  }", "}", "}", "");
 }
 
 void DFA::_printStateReset(ostream& os) {
   char tmp[BUFFER_SIZE_SMALL];
   sprintf(tmp, "state = %d;", _first);
-  c_code(os,
+  printCode(os,
         "buffer[0] = '\\0';",
         "buffer_index = 0;",
          tmp,
@@ -299,7 +294,7 @@ void DFA::_printStateReset(ostream& os) {
 void DFA::_printStateEnd(ostream& os, int endPoint) {
   char end[BUFFER_SIZE_SMALL];
   sprintf(end, "endHandler%d(token);", endPoint);
-  c_code(os,
+  printCode(os,
          "Token* token;",
          "NEW_TOKEN(token);",
          end,
@@ -317,7 +312,7 @@ void DFA::_printStateEnd(ostream& os, int endPoint) {
 void DFA::_printStateChange(ostream& os, DFAState* state) {
   char bf1[BUFFER_SIZE], bf2[BUFFER_SIZE];
   sprintf(bf1, "case %d:", state->identifier);
-  c_code(os, bf1, "  switch(c) {", "");
+  printCode(os, bf1, "  switch(c) {", "");
   typedef map<int, int> map_t;
   BOOST_FOREACH (map_t::value_type item, state->nexts) {
     char caseState[4];
@@ -338,11 +333,11 @@ void DFA::_printStateChange(ostream& os, DFAState* state) {
     }
     sprintf(bf1, "    case '%s':", caseState);
     sprintf(bf2, "      state = %d;", item.second);
-    c_code(os, bf1, bf2, "break;", "");
+    printCode(os, bf1, bf2, "break;", "");
   }
   os   << "    default:" << endl;
   if (state->isEnd) {
-    c_code(os,
+    printCode(os,
            "      fseek(file, -1, SEEK_CUR);",
            "      buffer_index--;",
            "      buffer[buffer_index] = '\\0';",
@@ -350,7 +345,7 @@ void DFA::_printStateChange(ostream& os, DFAState* state) {
     _printStateEnd(os, state->endId);
     _printStateReset(os);
   } else {
-    c_code(os,
+    printCode(os,
           "      fprintf(stdout, \"Error while parsing : %s\\n\", buffer);",
           "      fprintf(stdout, \"Error while parsing : %d\\n\", buffer[buffer_index - 1]);",
           "      fprintf(stderr, \"Error while parsing\\n\");",
@@ -358,5 +353,5 @@ void DFA::_printStateChange(ostream& os, DFAState* state) {
           "      break;",
           "");
   }
-  c_code(os, "    }", "  break;", "");
+  printCode(os, "    }", "  break;", "");
 }

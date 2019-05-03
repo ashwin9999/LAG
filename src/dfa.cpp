@@ -69,7 +69,7 @@ void DFA::print(ostream& os, vector<DFAState*>& states) {
   int max = 0;
   BOOST_FOREACH (DFAState* state, states) {
     BOOST_FOREACH(map_t::value_type item_m, state->nexts) {
-      os << (char)item_m.first << " => " << item_m.second << "\n";
+      os << (char)item_m.first << " -> " << item_m.second << "\n";
       if(item_m.second > max){
         max = item_m.second;
       }
@@ -346,9 +346,9 @@ void DFA::_printStateChange(ostream& os, DFAState* state) {
     _printStateReset(os);
   } else {
     printCode(os,
-          "      fprintf(stdout, \"Error while parsing : %s\\n\", buffer);",
-          "      fprintf(stdout, \"Error while parsing : %d\\n\", buffer[buffer_index - 1]);",
-          "      fprintf(stderr, \"Error while parsing\\n\");",
+          "      fprintf(stdout, \"Could not parse : %s\\n\", buffer);",
+          "      fprintf(stdout, \"Could not parse : %d\\n\", buffer[buffer_index - 1]);",
+          "      fprintf(stderr, \"Could not parse\\n\");",
           "      exit(1);", 
           "      break;",
           "");

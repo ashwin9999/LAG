@@ -17,7 +17,9 @@ This is a Lexical Analyzer Generator implemented in C++. It reads input specific
 ### References used:
 
 https://swtch.com/~rsc/regexp/regexp1.html
+
 https://en.wikipedia.org/wiki/Lex_(software)
+
 https://www.epaperpress.com/lexandyacc/download/lex.pdf
 
 ### Compiling and running:

@@ -178,7 +178,7 @@ void Parser::_parse(istream& is) {
   if (strcmp(buffer, "%{") == 0) {
     _parseDeclaration(is);
   } else {
-    cerr << "WRONG LEX FORMAT" << endl;
+    cerr << "Error in format" << endl;
     exit(1);
   }
   fgetline(is, buffer, BUFFER_SIZE_SMALL);

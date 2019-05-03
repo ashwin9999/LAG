@@ -31,6 +31,8 @@ make
 ./lag files/input.specs output.cpp
 ```
 
+<b> Note: running the make command will give a warning, but that warning can be ignored. It will not give any errors. </b>
+
 This will generate the Lexical Analyzer in the file output.cpp. 
 To run the Lexical Analyzer on the test samples.
 
@@ -170,7 +172,7 @@ void print() {
 }
 
 int main(int argc, char** argv) {
-  yylex(argv[1], print);
+  lexicalAnalyzer(argv[1], print);
   return 0;
 }
 ```

@@ -112,6 +112,6 @@ void print() {
 }
 
 int main(int argc, char** argv) {
-  yylex(argv[1], print);
+  lexicalAnalyzer(argv[1], print);
   return 0;
 }

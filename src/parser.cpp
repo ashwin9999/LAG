@@ -315,7 +315,7 @@ void Parser::_printHelper(ostream& os) {
          "    free(tmp);",
          "  }",
          "}",
-         "void yylex(char* input, void (*func)()) {",
+         "void lexicalAnalyzer(char* input, void (*func)()) {",
          "  FILE* infile;",
          "  infile = fopen(input, \"r\");",
          "  parse(infile);",

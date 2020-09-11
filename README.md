@@ -1,4 +1,4 @@
-# LAG_
+# LAG
 Lexical Analyzer Generator
 
 This is a Lexical Analyzer Generator implemented in C++. It reads input specifications and outputs a Lexical Analyzer which can parse C++ code into a token list. 
